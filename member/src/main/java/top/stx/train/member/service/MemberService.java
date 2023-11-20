@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import top.stx.train.common.controller.ControllerExceptionHandler;
 import top.stx.train.common.exception.BusinessException;
 import top.stx.train.common.exception.BusinessExceptionEnum;
+import top.stx.train.common.util.JwtUtil;
 import top.stx.train.common.util.SnowUtil;
 import top.stx.train.member.domain.Member;
 import top.stx.train.member.domain.MemberExample;
@@ -86,7 +87,10 @@ public class MemberService {
         if (!"8888".equals(code)) {
             throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_CODE_ERROR);
         }
-        return BeanUtil.copyProperties(memberDB,MemberLoginResp.class);
+        MemberLoginResp memberLoginResp = BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
+        String token = JwtUtil.createToken(memberLoginResp.getId(), memberLoginResp.getMobile());
+        memberLoginResp.setToken(token);
+        return memberLoginResp;
     }
 
     private Member selectByMobile(String mobile) {
