@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.stx.train.member.service.MemberService;
 
 @RestController
-@RequestMapping("member")
+@RequestMapping("/member")
 public class MemberController {
     @Resource
     private MemberService memberService;
@@ -15,5 +15,4 @@ public class MemberController {
     public Integer count(){
         return memberService.count();
     }
-
 }
