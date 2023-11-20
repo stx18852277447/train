@@ -1,4 +1,4 @@
-package top.stx.train.member.aspect;
+package top.stx.train.common.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;

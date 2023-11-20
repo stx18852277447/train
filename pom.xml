@@ -18,6 +18,7 @@
 
     <modules>
         <module>member</module>
+        <module>common</module>
     </modules>
 
     <properties>
@@ -53,6 +54,11 @@
                 <version>1.18.28</version>
             </dependency>
 
+            <dependency>
+                <groupId>top.stx</groupId>
+                <artifactId>common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
