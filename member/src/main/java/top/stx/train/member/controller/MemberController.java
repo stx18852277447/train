@@ -27,7 +27,7 @@ public class MemberController {
 
     @PostMapping("/register")
     public CommonResp<Long> register(@Valid MemberRegisterReq req) {
-        Long register = memberService.register(req);
+        long register = memberService.register(req);
         return new CommonResp<>(register);
     }
 
@@ -36,9 +36,11 @@ public class MemberController {
         memberService.sendCode(req);
         return new CommonResp<>();
     }
+
     @PostMapping("/login")
     public CommonResp<MemberLoginResp> login(@Valid @RequestBody MemberLoginReq req) {
         MemberLoginResp resp = memberService.login(req);
         return new CommonResp<>(resp);
     }
 }
+
