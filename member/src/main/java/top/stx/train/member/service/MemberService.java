@@ -5,6 +5,8 @@ import java.util.List;
 import cn.hutool.core.collection.CollUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import top.stx.train.common.exception.BusinessException;
+import top.stx.train.common.exception.BusinessExceptionEnum;
 import top.stx.train.member.domain.Member;
 import top.stx.train.member.domain.MemberExample;
 import top.stx.train.member.mapper.MemberMapper;
@@ -20,13 +22,13 @@ public class MemberService {
     }
 
     public long register(MemberRegisterReq req) {
-        String mobile=req.getMobile();
+        String mobile = req.getMobile();
         MemberExample memberExample = new MemberExample();
         memberExample.createCriteria().andMobileEqualTo(mobile);
         List<Member> list = memberMapper.selectByExample(memberExample);
 
         if (CollUtil.isNotEmpty(list)) {
-            throw new RuntimeException("手机号已注册");
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_EXIST);
         }
 
         Member member = new Member();
