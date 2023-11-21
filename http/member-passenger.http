@@ -8,3 +8,14 @@ token: {{token}}
   "idCard": "123456789",
   "type": "1"
 }
+
+###
+POST http://localhost:8001/member/passenger/save
+Content-Type: application/json
+token: {{token}}
+
+{
+  "name": "stx",
+  "idCard": "123456789",
+  "type": "1"
+}
