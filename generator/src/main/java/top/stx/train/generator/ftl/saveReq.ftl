@@ -1,4 +1,4 @@
-package top.stx.train.member.req;
+package top.stx.train.${module}.req;
 
 <#list typeSet as type>
     <#if type=='Date'>

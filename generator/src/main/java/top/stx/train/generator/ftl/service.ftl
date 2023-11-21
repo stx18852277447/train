@@ -1,4 +1,4 @@
-package top.stx.train.member.service;
+package top.stx.train.${module}.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
@@ -8,12 +8,12 @@ import com.github.pagehelper.PageInfo;
 import top.stx.train.common.context.LoginMemberContext;
 import top.stx.train.common.resp.PageResp;
 import top.stx.train.common.util.SnowUtil;
-import top.stx.train.member.domain.${Domain};
-import top.stx.train.member.domain.${Domain}Example;
-import top.stx.train.member.mapper.${Domain}Mapper;
-import top.stx.train.member.req.${Domain}QueryReq;
-import top.stx.train.member.req.${Domain}SaveReq;
-import top.stx.train.member.resp.${Domain}QueryResp;
+import top.stx.train.${module}.domain.${Domain};
+import top.stx.train.${module}.domain.${Domain}Example;
+import top.stx.train.${module}.mapper.${Domain}Mapper;
+import top.stx.train.${module}.req.${Domain}QueryReq;
+import top.stx.train.${module}.req.${Domain}SaveReq;
+import top.stx.train.${module}.resp.${Domain}QueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
