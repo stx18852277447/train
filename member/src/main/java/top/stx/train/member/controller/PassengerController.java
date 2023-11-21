@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.stx.train.common.context.LoginMemberContext;
+import top.stx.train.common.req.PageResp;
 import top.stx.train.common.resp.CommonResp;
 import top.stx.train.member.req.PassengerQueryReq;
 import top.stx.train.member.req.PassengerSaveReq;
@@ -29,9 +30,9 @@ public class PassengerController {
     }
 
     @GetMapping("/query-list")
-    public CommonResp<List<PassengerQueryResp>> queryList(@Valid PassengerQueryReq req) {
+    public CommonResp<PageResp<PassengerQueryResp>> queryList(@Valid PassengerQueryReq req) {
         req.setMemberId(LoginMemberContext.getId());
-        List<PassengerQueryResp> list = passengerService.queryList(req);
+        PageResp<PassengerQueryResp> list = passengerService.queryList(req);
         return new CommonResp<>(list);
     }
 }
