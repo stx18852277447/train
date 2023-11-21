@@ -17,7 +17,7 @@ import top.stx.train.member.domain.Passenger;
 import top.stx.train.member.domain.PassengerExample;
 import top.stx.train.member.mapper.PassengerMapper;
 import top.stx.train.member.req.PassengerQueryReq;
-import top.stx.train.member.req.PassengerSaveReq;
+import top.stx.train.member.req.PassengerSaveReq1;
 import top.stx.train.member.resp.PassengerQueryResp;
 
 @Service
@@ -26,7 +26,7 @@ public class PassengerService1 {
     @Resource
     private PassengerMapper passengerMapper;
 
-    public void save(PassengerSaveReq req) {
+    public void save(PassengerSaveReq1 req) {
         DateTime now = DateTime.now();
         Passenger passenger = BeanUtil.copyProperties(req,Passenger.class);
         if (ObjectUtil.isNull(passenger.getId())){

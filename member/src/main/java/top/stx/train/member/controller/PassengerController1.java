@@ -13,7 +13,7 @@ import top.stx.train.common.context.LoginMemberContext;
 import top.stx.train.common.req.PageResp;
 import top.stx.train.common.resp.CommonResp;
 import top.stx.train.member.req.PassengerQueryReq;
-import top.stx.train.member.req.PassengerSaveReq;
+import top.stx.train.member.req.PassengerSaveReq1;
 import top.stx.train.member.resp.PassengerQueryResp;
 import top.stx.train.member.service.PassengerService1;
 
@@ -24,7 +24,7 @@ public class PassengerController1 {
     private PassengerService1 passengerService1;
 
     @PostMapping("/save")
-    public CommonResp<Object> save(@Valid @RequestBody PassengerSaveReq req) {
+    public CommonResp<Object> save(@Valid @RequestBody PassengerSaveReq1 req) {
         passengerService1.save(req);
         return new CommonResp<>();
     }
