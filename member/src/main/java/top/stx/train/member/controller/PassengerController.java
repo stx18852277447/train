@@ -13,32 +13,31 @@ import top.stx.train.common.context.LoginMemberContext;
 import top.stx.train.common.req.PageResp;
 import top.stx.train.common.resp.CommonResp;
 import top.stx.train.member.req.PassengerQueryReq;
+import top.stx.train.member.req.PassengerSaveReq;
 import top.stx.train.member.req.PassengerSaveReq1;
 import top.stx.train.member.resp.PassengerQueryResp;
-import top.stx.train.member.service.PassengerService1;
+import top.stx.train.member.service.PassengerService;
 
 @RestController
 @RequestMapping("/passenger")
 public class PassengerController {
     @Resource
-    private PassengerService1 passengerService1;
-
+    private PassengerService passengerService;
     @PostMapping("/save")
-    public CommonResp<Object> save(@Valid @RequestBody PassengerSaveReq1 req) {
-        passengerService1.save(req);
+    public CommonResp<Object> save(@Valid @RequestBody PassengerSaveReq req){
+        passengerService.save(req);
         return new CommonResp<>();
     }
 
     @GetMapping("/query-list")
-    public CommonResp<PageResp<PassengerQueryResp>> queryList(@Valid PassengerQueryReq req) {
+    public CommonResp<PageResp<PassengerQueryResp>> queryList(@Valid PassengerQueryReq req){
         req.setMemberId(LoginMemberContext.getId());
-        PageResp<PassengerQueryResp> list = passengerService1.queryList(req);
+        PageResp<PassengerQueryResp> list = passengerService.queryList(req);
         return new CommonResp<>(list);
     }
     @DeleteMapping("/delete/{id}")
     public CommonResp<Object> delete(@PathVariable Long id) {
-        passengerService1.delete(id);
+        passengerService.delete(id);
         return new CommonResp<>();
     }
-
 }

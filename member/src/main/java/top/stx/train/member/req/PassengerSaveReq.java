@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PassengerSaveReq {
     private Long id;
-    //@NotNull(message = "【会员ID】不能为空")
-    private Long memberId;
 
+    private Long memberId;
     @NotBlank(message = "【名字】不能为空")
     private String name;
 
@@ -25,9 +24,8 @@ public class PassengerSaveReq {
 
     @NotBlank(message = "【旅客类型】不能为空")
     private String type;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone ="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone ="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
-
 }
