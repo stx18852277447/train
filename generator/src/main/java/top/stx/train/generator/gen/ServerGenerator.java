@@ -13,9 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * @author moqi
- */
 public class ServerGenerator {
     static String servicePath = "[module]/src/main/java/top/stx/train/[module]/service/";
     static String serverPath = "[module]/src/main/java/top/stx/train/[module]/";
