@@ -19,3 +19,8 @@ token: {{token}}
   "idCard": "123456789",
   "type": "1"
 }
+
+###
+GET http://localhost:8001/member/passenger/query-list
+Content-Type: application/json
+token: {{token}}
