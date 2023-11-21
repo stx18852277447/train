@@ -24,3 +24,27 @@ token: {{token}}
 GET http://localhost:8001/member/passenger/query-list?page=1&size=2
 Content-Type: application/json
 token: {{token}}
+
+###
+POST http://localhost:8001/member/passenger/save
+Content-Type: application/json
+token: {{token}}
+
+{
+  "name": "张三",
+  "idCard": "1234567839",
+  "type": "2"
+}
+
+###
+POST http://localhost:8001/member/passenger/save
+Content-Type: application/json
+token: {{token}}
+
+{
+  "id": 1726888092096401405,
+  "memberId": 1,
+  "name": "张三",
+  "idCard": "1234567839",
+  "type": "1"
+}
