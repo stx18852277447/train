@@ -1,7 +1,5 @@
 package top.stx.train.member.controller;
 
-import java.util.List;
-
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,29 +15,29 @@ import top.stx.train.common.resp.CommonResp;
 import top.stx.train.member.req.PassengerQueryReq;
 import top.stx.train.member.req.PassengerSaveReq;
 import top.stx.train.member.resp.PassengerQueryResp;
-import top.stx.train.member.service.PassengerService;
+import top.stx.train.member.service.PassengerService1;
 
 @RestController
 @RequestMapping("/passenger")
-public class PassengerController {
+public class PassengerController1 {
     @Resource
-    private PassengerService passengerService;
+    private PassengerService1 passengerService1;
 
     @PostMapping("/save")
     public CommonResp<Object> save(@Valid @RequestBody PassengerSaveReq req) {
-        passengerService.save(req);
+        passengerService1.save(req);
         return new CommonResp<>();
     }
 
     @GetMapping("/query-list")
     public CommonResp<PageResp<PassengerQueryResp>> queryList(@Valid PassengerQueryReq req) {
         req.setMemberId(LoginMemberContext.getId());
-        PageResp<PassengerQueryResp> list = passengerService.queryList(req);
+        PageResp<PassengerQueryResp> list = passengerService1.queryList(req);
         return new CommonResp<>(list);
     }
     @DeleteMapping("/delete/{id}")
     public CommonResp<Object> delete(@PathVariable Long id) {
-        passengerService.delete(id);
+        passengerService1.delete(id);
         return new CommonResp<>();
     }
 

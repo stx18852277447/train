@@ -22,7 +22,7 @@ import top.stx.train.member.resp.PassengerQueryResp;
 
 @Service
 @Slf4j
-public class PassengerService {
+public class PassengerService1 {
     @Resource
     private PassengerMapper passengerMapper;
 
