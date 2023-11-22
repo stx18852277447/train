@@ -5,7 +5,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import top.stx.train.common.context.LoginMemberContext;
+<#--import top.mqxu.train.common.context.LoginMemberContext;-->
 import top.stx.train.common.resp.PageResp;
 import top.stx.train.common.util.SnowUtil;
 import top.stx.train.${module}.domain.${Domain};
@@ -33,7 +33,7 @@ public class ${Domain}Service {
         DateTime now = DateTime.now();
         ${Domain} ${domain} = BeanUtil.copyProperties(req, ${Domain}.class);
         if (ObjectUtil.isNull(${domain}.getId())) {
-        ${domain}.setMemberId(LoginMemberContext.getId());
+<#--        ${domain}.setMemberId(LoginMemberContext.getId());-->
         ${domain}.setId(SnowUtil.getSnowflakeNextId());
         ${domain}.setCreateTime(now);
         ${domain}.setUpdateTime(now);
@@ -48,10 +48,9 @@ public class ${Domain}Service {
         ${Domain}Example ${domain}Example = new ${Domain}Example();
         ${domain}Example.setOrderByClause("id desc");
         ${Domain}Example.Criteria criteria = ${domain}Example.createCriteria();
-        if (ObjectUtil.isNotNull(req.getMemberId())) {
-        criteria.andMemberIdEqualTo(req.getMemberId());
-        }
-
+    <#--        if (ObjectUtil.isNotNull(req.getMemberId())) {-->
+    <#--        criteria.andMemberIdEqualTo(req.getMemberId());-->
+    <#--        }-->
         LOG.info("查询页码：{}", req.getPage());
         LOG.info("每页条数：{}", req.getSize());
         PageHelper.startPage(req.getPage(), req.getSize());
@@ -61,7 +60,7 @@ public class ${Domain}Service {
         LOG.info("总行数：{}", pageInfo.getTotal());
         LOG.info("总页数：{}", pageInfo.getPages());
 
-        List <${Domain}QueryResp> list = BeanUtil.copyToList(${domain}List, ${Domain}QueryResp.class);
+        List<${Domain}QueryResp> list = BeanUtil.copyToList(${domain}List, ${Domain}QueryResp.class);
 
         PageResp<${Domain}QueryResp> pageResp = new PageResp<>();
         pageResp.setTotal(pageInfo.getTotal());
@@ -69,6 +68,6 @@ public class ${Domain}Service {
         return pageResp;
     }
     public void delete(Long id) {
-         ${domain}Mapper.deleteByPrimaryKey(id);
+        ${domain}Mapper.deleteByPrimaryKey(id);
     }
 }

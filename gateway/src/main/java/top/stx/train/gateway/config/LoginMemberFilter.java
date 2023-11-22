@@ -29,6 +29,10 @@ public class LoginMemberFilter implements Ordered, GlobalFilter {
         if (path.contains("/admin")
             || path.contains("/hello")
             || path.contains("/member/member/login")
+            || path.contains("/member/member/count")
+            || path.contains("/member/passenger/query-list")
+            || path.contains("/member/passenger/save")
+            || path.contains("/member/passenger/delete")
             || path.contains("/member/member/register")
             || path.contains("/member/member/send-code")) {
             log.info("不需要登录验证：{}", path);

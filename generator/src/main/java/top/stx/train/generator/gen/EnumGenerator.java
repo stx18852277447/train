@@ -1,3 +1,4 @@
+/*
 package top.stx.train.generator.gen;
 
 import cn.hutool.core.util.StrUtil;
@@ -58,11 +59,13 @@ public class EnumGenerator {
         bufferArray.append("];\r\n");
     }
 
-    /**
+    */
+/**
      * 写文件
      *
      * @param stringBuffer 文件内容
-     */
+     *//*
+
     public static void writeJs(StringBuffer stringBuffer) {
         FileOutputStream out = null;
         try {
@@ -83,3 +86,4 @@ public class EnumGenerator {
         }
     }
 }
+*/
