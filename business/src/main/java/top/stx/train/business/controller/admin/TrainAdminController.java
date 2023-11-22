@@ -1,5 +1,7 @@
 package top.stx.train.business.controller.admin;
 
+import java.util.List;
+
 import top.stx.train.business.service.TrainSeatService;
 import top.stx.train.common.context.LoginMemberContext;
 import top.stx.train.common.resp.CommonResp;
@@ -44,5 +46,9 @@ public class TrainAdminController {
     trainSeatService.genTrainSeat(trainCode);
         return new CommonResp<>();
     }
-
+    @GetMapping("/query-all")
+    public CommonResp<List<TrainQueryResp>> queryList() {
+        List<TrainQueryResp> list = trainService.queryAll();
+        return new CommonResp<>(list);
+    }
 }
