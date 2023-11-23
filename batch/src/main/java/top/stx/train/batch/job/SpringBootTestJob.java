@@ -1,3 +1,4 @@
+/*
 package top.stx.train.batch.job;
 
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -13,3 +14,4 @@ public class SpringBootTestJob {
         System.out.println("SpringBootTestJob Test");
     }
 }
+*/
