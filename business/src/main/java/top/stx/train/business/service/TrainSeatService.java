@@ -8,6 +8,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.transaction.annotation.Transactional;
 import top.stx.train.business.domain.TrainCarriage;
+import top.stx.train.business.domain.TrainStation;
+import top.stx.train.business.domain.TrainStationExample;
 import top.stx.train.business.enums.SeatColEnum;
 import top.stx.train.common.req.PageResp;
 import top.stx.train.common.util.SnowUtil;
