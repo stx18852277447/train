@@ -34,12 +34,15 @@ public class TrainCarriageService {
 
     public void save(TrainCarriageSaveReq req) {
         DateTime now = DateTime.now();
-        //自动计算出列数和总座位数
+
+        // 自动计算出列数和总座位数
         List<SeatColEnum> seatColEnums = SeatColEnum.getColsByType(req.getSeatType());
         req.setColCount(seatColEnums.size());
         req.setSeatCount(req.getColCount() * req.getRowCount());
+
         TrainCarriage trainCarriage = BeanUtil.copyProperties(req, TrainCarriage.class);
         if (ObjectUtil.isNull(trainCarriage.getId())) {
+            // 保存之前，先校验唯一键是否存在
             TrainCarriage trainCarriageDB = selectByUnique(req.getTrainCode(), req.getIndex());
             if (ObjectUtil.isNotEmpty(trainCarriageDB)) {
                 throw new BusinessException(BusinessExceptionEnum.BUSINESS_TRAIN_CARRIAGE_INDEX_UNIQUE_ERROR);
