@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import top.stx.train.common.resp.CommonResp;
 
+//@FeignClient(name= "business",url="http://127.0.0.1:8002/business")
 @FeignClient("business")
 public interface BusinessFeign {
     @GetMapping("/hello")
