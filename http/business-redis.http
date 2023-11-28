@@ -6,3 +6,6 @@ GET http://localhost:8000/business/redis/get/123
 Accept: application/json
 
 ###
+GET http://localhost:8000/business/admin/daily-train-ticket/query-list3?page=1&size=5&trainCode=G1&start=上海&end=北京
+Content-Type: application/json
+{"dailyTrainTicketId":1729098132723208192,"date":1701187200000,"end":"北京站","start":"徐州站","tickets":[{"passengerId":1728976204729552896,"passengerIdCard":"123456789","passengerName":"stx","passengerType":"3","seatTypeCode":"1"}],"trainCode":"G1"}

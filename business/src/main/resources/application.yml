@@ -15,17 +15,15 @@ spring:
     redis:
       host: localhost
       port: 6379
-  cache:
-    type: redis
-    redis:
-      use-key-prefix: true
-      key-prefix: train_cache_
-      cache-null-values: true
-      time-to-live: 60s
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  configuration:
-    local-cache-scope: statement
+
 logging:
   level:
-    top.mqxu.train.business.mapper: trace
+    top.stx.train.business.mapper: trace

@@ -1,5 +1,12 @@
 package top.stx.train.business.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +23,26 @@ import org.springframework.core.env.Environment;
 @EnableFeignClients("top.stx.train.business.feign")
 @EnableCaching
 public class BusinessApplication {
-    private static final Logger LOG= LoggerFactory.getLogger(BusinessApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BusinessApplication.class);
+
     public static void main(String[] args) {
-        SpringApplication app= new SpringApplication(BusinessApplication.class);
-        Environment env =app.run(args).getEnvironment();
+        SpringApplication app = new SpringApplication(BusinessApplication.class);
+        Environment env = app.run(args).getEnvironment();
         LOG.info("启动成功！！");
-        LOG.info("测试地址: \thttp://127.0.0.1:{}/hello",env.getProperty("server.port"));
+        LOG.info("测试地址: \thttp://127.0.0.1:{}/hello", env.getProperty("server.port"));
+        //限流规则
+        initFlowRules();
+        LOG.info("已定义限流规则");
+    }
+
+    private static void initFlowRules() {
+        List<FlowRule> rules = new ArrayList<>();
+        FlowRule rule = new FlowRule();
+        rule.setResource("doConfirm");
+        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        // set limit QPs to 20.
+        rule.setCount(1);
+        rules.add(rule);
+        FlowRuleManager.loadRules(rules);
     }
 }
