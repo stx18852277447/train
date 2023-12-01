@@ -2,7 +2,7 @@
     <p>
         <a-space>
             <a-button type="primary" @click="handleQuery()">刷新</a-button>
-                            <a-button type="primary" @click="onAdd">新增</a-button>
+            
         </a-space>
     </p>
     <a-table :dataSource="students"
@@ -12,44 +12,9 @@
              :loading="loading">
         <template #bodyCell="{ column, record }">
             <template v-if="column.dataIndex === 'operation'">
-                    <a-space>
-                        <a-popconfirm
-                                title="删除后不可恢复，确认删除?"
-                                @confirm="onDelete(record)"
-                                ok-text="确认" cancel-text="取消">
-                            <a style="color: red">删除</a>
-                        </a-popconfirm>
-                        <a @click="onEdit(record)">编辑</a>
-                    </a-space>
             </template>
         </template>
     </a-table>
-        <a-modal v-model:visible="visible" title="" @ok="handleOk"
-                 ok-text="确认" cancel-text="取消">
-            <a-form :model="student" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
-                        <a-form-item label="">
-                                <a-input v-model:value="student.account"/>
-                        </a-form-item>
-                        <a-form-item label="">
-                                <a-input v-model:value="student.mobile"/>
-                        </a-form-item>
-                        <a-form-item label="">
-                                <a-input v-model:value="student.nickname"/>
-                        </a-form-item>
-                        <a-form-item label="">
-                                <a-input v-model:value="student.avatar"/>
-                        </a-form-item>
-                        <a-form-item label="">
-                                <a-input v-model:value="student.description"/>
-                        </a-form-item>
-                        <a-form-item label="">
-                                <a-input v-model:value="student.homepage"/>
-                        </a-form-item>
-                        <a-form-item label="">
-                                <a-input v-model:value="student.skill"/>
-                        </a-form-item>
-            </a-form>
-        </a-modal>
 </template>
 
 <script setup>
@@ -60,15 +25,11 @@
     const visible = ref(false);
     let student = ref({
         id: undefined,
-        account: undefined,
-        mobile: undefined,
-        nickname: undefined,
-        avatar: undefined,
-        description: undefined,
-        homepage: undefined,
-        skill: undefined,
-        createTime: undefined,
-        updateTime: undefined,
+        name: undefined,
+        age: undefined,
+        phoneNumber: undefined,
+        email: undefined,
+        school: undefined,
     });
     const students = ref([]);
     // 分页的三个属性名是固定的
@@ -81,85 +42,31 @@
     const columns = [
         {
             title: '',
-            dataIndex: 'account',
-            key: 'account',
+            dataIndex: 'name',
+            key: 'name',
         },
         {
             title: '',
-            dataIndex: 'mobile',
-            key: 'mobile',
+            dataIndex: 'age',
+            key: 'age',
         },
         {
             title: '',
-            dataIndex: 'nickname',
-            key: 'nickname',
+            dataIndex: 'phoneNumber',
+            key: 'phoneNumber',
         },
         {
             title: '',
-            dataIndex: 'avatar',
-            key: 'avatar',
+            dataIndex: 'email',
+            key: 'email',
         },
         {
             title: '',
-            dataIndex: 'description',
-            key: 'description',
+            dataIndex: 'school',
+            key: 'school',
         },
-        {
-            title: '',
-            dataIndex: 'homepage',
-            key: 'homepage',
-        },
-        {
-            title: '',
-            dataIndex: 'skill',
-            key: 'skill',
-        },
-        {
-            title: '操作',
-            dataIndex: 'operation'
-        }
     ];
 
-    const onAdd = () => {
-        student.value = {};
-        visible.value = true;
-    };
-
-    const onEdit = (record) => {
-        student.value = window.Tool.copy(record);
-        visible.value = true;
-    };
-
-    const onDelete = (record) => {
-        axios.delete("/business/admin/student/delete/" + record.id).then((response) => {
-            const data = response.data;
-            if (data.success) {
-                notification.success({description: "删除成功！"});
-                handleQuery({
-                    page: pagination.value.current,
-                    size: pagination.value.pageSize,
-                });
-            } else {
-                notification.error({description: data.message});
-            }
-        });
-    };
-
-    const handleOk = () => {
-        axios.post("/business/admin/student/save", student.value).then((response) => {
-            let data = response.data;
-            if (data.success) {
-                notification.success({description: "保存成功！"});
-                visible.value = false;
-                handleQuery({
-                    page: pagination.value.current,
-                    size: pagination.value.pageSize
-                });
-            } else {
-                notification.error({description: data.message});
-            }
-        });
-    };
 
     const handleQuery = (param) => {
         if (!param) {

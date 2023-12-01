@@ -5,8 +5,10 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import top.stx.train.business.domain.DailyTrainSeatExample;
 import top.stx.train.business.domain.TrainStation;
 import top.stx.train.common.req.PageResp;
 import top.stx.train.common.util.SnowUtil;
@@ -107,4 +109,13 @@ public class DailyTrainStationService {
         }
         LOG.info("生成日期[{}]车次[{}]的车站信息结束", DateUtil.formatDate(date), trainCode);
     }
+    /**
+     * 按车次查询全部车站
+     */
+    public long countByTrainCode(Date date, String trainCode) {
+        DailyTrainStationExample example = new DailyTrainStationExample();
+        example.createCriteria().andDateEqualTo(date).andTrainCodeEqualTo(trainCode);
+        return dailyTrainStationMapper.countByExample(example);
+    }
+
 }

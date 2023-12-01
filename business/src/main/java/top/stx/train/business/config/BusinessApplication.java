@@ -30,19 +30,19 @@ public class BusinessApplication {
         Environment env = app.run(args).getEnvironment();
         LOG.info("启动成功！！");
         LOG.info("测试地址: \thttp://127.0.0.1:{}/hello", env.getProperty("server.port"));
-        //限流规则
-        initFlowRules();
-        LOG.info("已定义限流规则");
+        ////限流规则
+        //initFlowRules();
+        //LOG.info("已定义限流规则");
     }
 
-    private static void initFlowRules() {
-        List<FlowRule> rules = new ArrayList<>();
-        FlowRule rule = new FlowRule();
-        rule.setResource("doConfirm");
-        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        // set limit QPs to 20.
-        rule.setCount(1);
-        rules.add(rule);
-        FlowRuleManager.loadRules(rules);
-    }
+    //private static void initFlowRules() {
+    //    List<FlowRule> rules = new ArrayList<>();
+    //    FlowRule rule = new FlowRule();
+    //    rule.setResource("doConfirm");
+    //    rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+    //    // set limit QPs to 20.
+    //    rule.setCount(1);
+    //    rules.add(rule);
+    //    FlowRuleManager.loadRules(rules);
+    //}
 }
