@@ -63,16 +63,18 @@ public class DailyTrainTicketService {
         }
     }
 
-    @CachePut(value = "DailyTrainTicketService.queryList")
-    public PageResp<DailyTrainTicketQueryResp> queryList2(DailyTrainTicketQueryReq req) {
-        return queryList(req);
-    }
-    @CachePut(value = "DailyTrainTicketService.queryList3")
+    // @Cacheable(value = "DailyTrainTicketService.queryList3")
     public PageResp<DailyTrainTicketQueryResp> queryList3(DailyTrainTicketQueryReq req) {
         LOG.info("测试缓存击穿");
         return null;
     }
-    @Cacheable(value = "DailyTrainTicketService.queryList")
+
+    @CachePut(value = "DailyTrainTicketService.queryList")
+    public PageResp<DailyTrainTicketQueryResp> queryList2(DailyTrainTicketQueryReq req) {
+        return queryList(req);
+    }
+
+    // @Cacheable(value = "DailyTrainTicketService.queryList")
     public PageResp<DailyTrainTicketQueryResp> queryList(DailyTrainTicketQueryReq req) {
         DailyTrainTicketExample dailyTrainTicketExample = new DailyTrainTicketExample();
         dailyTrainTicketExample.setOrderByClause("id desc");
@@ -89,11 +91,11 @@ public class DailyTrainTicketService {
         if (ObjUtil.isNotEmpty(req.getEnd())) {
             criteria.andEndEqualTo(req.getEnd());
         }
+
         LOG.info("查询页码：{}", req.getPage());
         LOG.info("每页条数：{}", req.getSize());
         PageHelper.startPage(req.getPage(), req.getSize());
-        List<DailyTrainTicket> dailyTrainTicketList = dailyTrainTicketMapper.selectByExample(
-            dailyTrainTicketExample);
+        List<DailyTrainTicket> dailyTrainTicketList = dailyTrainTicketMapper.selectByExample(dailyTrainTicketExample);
 
         PageInfo<DailyTrainTicket> pageInfo = new PageInfo<>(dailyTrainTicketList);
         LOG.info("总行数：{}", pageInfo.getTotal());
@@ -115,13 +117,15 @@ public class DailyTrainTicketService {
     @Transactional
     public void genDaily(DailyTrain dailyTrain, Date date, String trainCode) {
         LOG.info("生成日期【{}】车次【{}】的余票信息开始", DateUtil.formatDate(date), trainCode);
-        //删除某日某车次的余票信息
+
+        // 删除某日某车次的余票信息
         DailyTrainTicketExample dailyTrainTicketExample = new DailyTrainTicketExample();
         dailyTrainTicketExample.createCriteria()
             .andDateEqualTo(date)
             .andTrainCodeEqualTo(trainCode);
         dailyTrainTicketMapper.deleteByExample(dailyTrainTicketExample);
-        //查出某车次的所有的车站信息
+
+        // 查出某车次的所有的车站信息
         List<TrainStation> stationList = trainStationService.selectByTrainCode(trainCode);
         if (CollUtil.isEmpty(stationList)) {
             LOG.info("该车次没有车站基础数据，生成该车次的余票信息结束");
@@ -130,12 +134,14 @@ public class DailyTrainTicketService {
 
         DateTime now = DateTime.now();
         for (int i = 0; i < stationList.size(); i++) {
-            //得到出发站
+            // 得到出发站
             TrainStation trainStationStart = stationList.get(i);
             BigDecimal sumKM = BigDecimal.ZERO;
+
             for (int j = (i + 1); j < stationList.size(); j++) {
                 TrainStation trainStationEnd = stationList.get(j);
                 sumKM = sumKM.add(trainStationEnd.getKm());
+
                 DailyTrainTicket dailyTrainTicket = new DailyTrainTicket();
                 dailyTrainTicket.setId(SnowUtil.getSnowflakeNextId());
                 dailyTrainTicket.setDate(date);
@@ -148,13 +154,15 @@ public class DailyTrainTicketService {
                 dailyTrainTicket.setEndPinyin(trainStationEnd.getNamePinyin());
                 dailyTrainTicket.setEndTime(trainStationEnd.getInTime());
                 dailyTrainTicket.setEndIndex(trainStationEnd.getIndex());
+
                 int ydz = dailyTrainSeatService.countSeat(date, trainCode, SeatTypeEnum.YDZ.getCode());
                 int edz = dailyTrainSeatService.countSeat(date, trainCode, SeatTypeEnum.EDZ.getCode());
                 int rw = dailyTrainSeatService.countSeat(date, trainCode, SeatTypeEnum.RW.getCode());
                 int yw = dailyTrainSeatService.countSeat(date, trainCode, SeatTypeEnum.YW.getCode());
-                //票价=里程之和*座位单价*车次类型系数
+
+                // 票价 = 里程之和 * 座位单价 * 车次类型系数
                 String trainType = dailyTrain.getType();
-                //计算票价系数:TrainTypeEnum.priceRate
+                // 计算票价系数：TrainTypeEnum.priceRate
                 BigDecimal priceRate = EnumUtil.getFieldBy(TrainTypeEnum::getPriceRate, TrainTypeEnum::getCode,
                     trainType);
                 BigDecimal ydzPrice = sumKM.multiply(SeatTypeEnum.YDZ.getPrice()).multiply(priceRate).setScale(2,
@@ -165,6 +173,7 @@ public class DailyTrainTicketService {
                     RoundingMode.HALF_UP);
                 BigDecimal ywPrice = sumKM.multiply(SeatTypeEnum.YW.getPrice()).multiply(priceRate).setScale(2,
                     RoundingMode.HALF_UP);
+
                 dailyTrainTicket.setYdz(ydz);
                 dailyTrainTicket.setYdzPrice(ydzPrice);
                 dailyTrainTicket.setEdz(edz);
@@ -178,14 +187,15 @@ public class DailyTrainTicketService {
                 dailyTrainTicketMapper.insert(dailyTrainTicket);
             }
         }
-        LOG.info("生成日期[{}]车次[{}]的余票信息结束", DateUtil.formatDate(date), trainCode);
+        LOG.info("生成日期【{}】车次【{}】的余票信息结束", DateUtil.formatDate(date), trainCode);
     }
 
     public DailyTrainTicket selectByUnique(Date date, String trainCode, String start, String end) {
         DailyTrainTicketExample dailyTrainTicketExample = new DailyTrainTicketExample();
         dailyTrainTicketExample.createCriteria()
             .andDateEqualTo(date)
-            .andTrainCodeEqualTo(trainCode).andStartEqualTo(start)
+            .andTrainCodeEqualTo(trainCode)
+            .andStartEqualTo(start)
             .andEndEqualTo(end);
         List<DailyTrainTicket> list = dailyTrainTicketMapper.selectByExample(dailyTrainTicketExample);
         if (CollUtil.isNotEmpty(list)) {
