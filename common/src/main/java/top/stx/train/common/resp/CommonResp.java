@@ -16,7 +16,11 @@ public class CommonResp<T> {
      * 返回泛型数据，自定义类型
      */
     private T content;
-
+    public CommonResp(boolean success, String message, T content) {
+        this.success = success;
+        this.message = message;
+        this.content = content;
+    }
     public CommonResp() {
     }
 

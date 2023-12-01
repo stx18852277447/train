@@ -13,11 +13,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import top.stx.train.gateway.util.JwtUtil;
 
-/**
- * @author mqxu
- * @date 2023/11/20
- * @description LoginMemberFilter
- **/
 @Component
 @Slf4j
 public class LoginMemberFilter implements Ordered, GlobalFilter {
@@ -29,6 +24,7 @@ public class LoginMemberFilter implements Ordered, GlobalFilter {
         if (path.contains("/admin")
             || path.contains("/hello")
             || path.contains("/redis")
+            || path.contains("/business/kaptcha")
             || path.contains("/member/member/login")
             || path.contains("/member/member/count")
             || path.contains("/member/passenger/query-list")
